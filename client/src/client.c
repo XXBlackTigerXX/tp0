@@ -22,7 +22,7 @@ int main(void)
 	// Escribi: "Hola! Soy un log"
 
 	log_info(logger, "Soy un logger.");
-	log_destroy(logger)
+	log_destroy(logger);
 
 
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
@@ -68,8 +68,8 @@ t_log* iniciar_logger(void)
 
 	nuevo_logger = log_create (NombreLogger, NombrePrograma, consola_activada_logger, nivel_logger);
 	if(nuevo_logger == NULL) {
-		printf("No pude crear el logger\n")
-		exit(1)
+		printf("No pude crear el logger\n");
+		exit(1);
 	}
 
 	return nuevo_logger;
