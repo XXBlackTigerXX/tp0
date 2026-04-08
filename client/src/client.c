@@ -13,7 +13,9 @@ int main(void)
 	t_config* config;
 
 	/* ---------------- LOGGING ---------------- */
-
+	char *current_dir = getcwd(NULL, 0);
+    printf("El directorio actual es %s\n", current_dir);
+    free(current_dir);
 	
 
 	logger = iniciar_logger();
@@ -22,6 +24,7 @@ int main(void)
 	// Escribi: "Hola! Soy un log"
 
 	log_info(logger, "Soy un logger.");
+
 	log_destroy(logger);
 
 
@@ -32,12 +35,20 @@ int main(void)
 	// Usando el config creado previamente, leemos los valores del config y los 
 	// dejamos en las variables 'ip', 'puerto' y 'valor'
 
+	valor = config_get_string_value(config, "CLAVE");
+	ip = config_get_string_value(config, "IP");
+	puerto = config_get_string_value(config, "PUERTO");
 	// Loggeamos el valor de config
 
+	logger = iniciar_logger();
+	log_info(logger, valor);
+	log_destroy(logger);
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
 	leer_consola(logger);
+	
+	
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
 
@@ -78,6 +89,8 @@ t_log* iniciar_logger(void)
 t_config* iniciar_config(void)
 {
 	t_config* nuevo_config;
+
+	nuevo_config = config_create("cliente.config");
 
 	return nuevo_config;
 }
