@@ -136,13 +136,11 @@ void paquete(int conexion)
 	leido = readline("> ");
 
 	 while(leido != NULL && leido[0] != '\0') {
-		agregar_a_paquete(paquete, leido, strlen(leido) + 1);
+		if (leido != NULL && leido[0] != '\0') {agregar_a_paquete(paquete, leido, strlen(leido) + 1);};
 		free(leido);
 		leido = readline("> ");
 	 }
 
-	agregar_a_paquete(paquete, leido, strlen(leido) + 1);
-	
 	// ¡No te olvides de liberar las líneas y el paquete antes de regresar!
 	enviar_paquete(paquete, conexion);
 	free(leido);
