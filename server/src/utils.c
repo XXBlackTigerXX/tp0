@@ -25,7 +25,7 @@ int iniciar_servidor(void)
 	
 
 	// Creamos el socket de escucha del servidor
-	err = socket_servidor = socket(hints.ai_family,hints.ai_socktype,hints.ai_flags);
+	err = socket_servidor = socket(servinfo->ai_family,servinfo->ai_socktype,servinfo->ai_protocol);
 	if (err == -1)
 	{
 		printf("Error: fallo de creacion socket de servidor.");
@@ -49,11 +49,11 @@ int iniciar_servidor(void)
 	err = setsockopt(socket_servidor, SOL_SOCKET, SO_REUSEPORT, &(int){1}, sizeof(int));
 	if(err == -1) {
 		printf("Error: SO_REUSEPORT servidor.");
+		abort();
 	};
 
 	freeaddrinfo(servinfo);
 	log_trace(logger, "Listo para escuchar a mi cliente");
-	abort();
 
 	return socket_servidor;
 }
