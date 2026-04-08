@@ -33,7 +33,7 @@ int iniciar_servidor(void)
 	};
 	
 	// Asociamos el socket a un puerto
-	err = bind(fd_socket_escucha_servidor, servinfo.ai_addr, servinfo.ai_addrlen);
+	err = bind(socket_servidor, servinfo->ai_addr, servinfo->ai_addrlen);
 	if(err == -1){
 		printf("Error: bind socket servidor");
 		abort();
@@ -65,7 +65,7 @@ int esperar_cliente(int socket_servidor)
 
 	// Aceptamos un nuevo cliente
 	int socket_cliente;
-	err = socket_cliente = accept(socket_servidor, NULL, NULL);
+	int err = socket_cliente = accept(socket_servidor, NULL, NULL);
 
 	if(err == -1) {
 		printf("Error: SO_REUSEPORT servidor.");

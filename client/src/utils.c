@@ -36,8 +36,8 @@ int crear_conexion(char *ip, char* puerto)
 	};
 
 	// Ahora vamos a crear el socket.
-	err = int socket_cliente = socket(server_info.ai_family, server_info.ai_socktype, server_info.ai_protocol);
-
+	int socket_cliente = socket(server_info->ai_family, server_info->ai_socktype, server_info->ai_protocol);
+	err = socket_cliente;
 	if (err == -1)
 	{
 		printf("Error: fallo de creacion socket de cliente.");
@@ -46,7 +46,7 @@ int crear_conexion(char *ip, char* puerto)
 
 	// Ahora que tenemos el socket, vamos a conectarlo
 
-	err = connect(socket_cliente, server_info.ai_addr, server_info.ai_addrlen);
+	err = connect(socket_cliente, server_info->ai_addr, server_info->ai_addrlen);
 
 		if (err == -1)
 	{
