@@ -74,14 +74,14 @@ t_log* iniciar_logger(void)
 {
 	t_log* nuevo_logger; 
 
-	char *NombreLogger = "tp0.log";
+	char *RutaLoggerDesdeCWD = "tp0.log";
 	char *NombrePrograma = "TP0";
 	bool consola_activada_logger = 1;
 	t_log_level nivel_logger = LOG_LEVEL_INFO;
 
-	nuevo_logger = log_create (NombreLogger, NombrePrograma, consola_activada_logger, nivel_logger);
+	nuevo_logger = log_create (RutaLoggerDesdeCWD, NombrePrograma, consola_activada_logger, nivel_logger);
 	if(nuevo_logger == NULL) {
-		printf("No pude crear el logger\n");
+		printf("Error: No pude crear el logger\n");
 		exit(1);
 	}
 
@@ -93,6 +93,11 @@ t_config* iniciar_config(void)
 	t_config* nuevo_config;
 
 	nuevo_config = config_create("cliente.config");
+
+	if(nuevo_config == NULL) {
+		printf("Error: No pude iniciar la config\n");
+		exit(1);
+	}
 
 	return nuevo_config;
 }
