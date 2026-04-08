@@ -5,10 +5,10 @@ t_log* logger;
 int iniciar_servidor(void)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	assert(!"no implementado!");
+	//assert(!"no implementado!");
 
 	int socket_servidor;
-
+	int err = 0;
 	struct addrinfo hints, *servinfo, *p;
 
 	memset(&hints, 0, sizeof(hints));
@@ -16,16 +16,44 @@ int iniciar_servidor(void)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	getaddrinfo(NULL, PUERTO, &hints, &servinfo);
+	err = getaddrinfo(NULL, PUERTO, &hints, &servinfo);
+	if (err != 0)
+	{
+		printf("Error: fallo getaddrinfo servidor");
+		abort();
+	};
+	
 
 	// Creamos el socket de escucha del servidor
-
+	err = socket_servidor = socket(hints.ai_family,hints.ai_socktype,hints.ai_flags);
+	if (err == -1)
+	{
+		printf("Error: fallo de creacion socket de servidor.");
+		abort();
+	};
+	
 	// Asociamos el socket a un puerto
-
+	err = bind(fd_socket_escucha_servidor, servinfo.ai_addr, servinfo.ai_addrlen);
+	if(err == -1){
+		printf("Error: bind socket servidor");
+		abort();
+	};
 	// Escuchamos las conexiones entrantes
+
+	err = listen(socket_servidor, SOMAXCONN);
+	if(err == -1) {
+		printf("Error: Poner en escucha socket servidor.");
+	};
+
+
+	err = setsockopt(socket_servidor, SOL_SOCKET, SO_REUSEPORT, &(int){1}, sizeof(int));
+	if(err == -1) {
+		printf("Error: SO_REUSEPORT servidor.");
+	};
 
 	freeaddrinfo(servinfo);
 	log_trace(logger, "Listo para escuchar a mi cliente");
+	abort();
 
 	return socket_servidor;
 }
@@ -33,10 +61,17 @@ int iniciar_servidor(void)
 int esperar_cliente(int socket_servidor)
 {
 	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	assert(!"no implementado!");
+	//assert(!"no implementado!");
 
 	// Aceptamos un nuevo cliente
 	int socket_cliente;
+	err = socket_cliente = accept(socket_servidor, NULL, NULL);
+
+	if(err == -1) {
+		printf("Error: SO_REUSEPORT servidor.");
+		abort();
+	};
+
 	log_info(logger, "Se conecto un cliente!");
 
 	return socket_cliente;
