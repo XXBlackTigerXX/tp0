@@ -39,7 +39,7 @@ int main(void)
 
 	// Loggeamos el valor de config
 
-	log_info(logger, "VALOR: %s", valor);
+	log_info(logger, "Clave/Valor: %s", valor);
 	log_info(logger, "IP: %s", ip);
 	log_info(logger, "PUERTO: %s", puerto);
 
