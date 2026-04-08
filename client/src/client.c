@@ -25,8 +25,6 @@ int main(void)
 
 	log_info(logger, "Soy un logger.");
 
-	log_destroy(logger);
-
 
 	/* ---------------- ARCHIVOS DE CONFIGURACION ---------------- */
 
@@ -38,19 +36,19 @@ int main(void)
 	valor = config_get_string_value(config, "CLAVE");
 	ip = config_get_string_value(config, "IP");
 	puerto = config_get_string_value(config, "PUERTO");
+
 	// Loggeamos el valor de config
 
-	logger = iniciar_logger();
 	log_info(logger, "VALOR: %s", valor);
 	log_info(logger, "IP: %s", ip);
 	log_info(logger, "PUERTO: %s", puerto);
-	log_destroy(logger);
+
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
 	leer_consola(logger);
 	
-	
+
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
 
@@ -82,7 +80,7 @@ t_log* iniciar_logger(void)
 	nuevo_logger = log_create (RutaLoggerDesdeCWD, NombrePrograma, consola_activada_logger, nivel_logger);
 	if(nuevo_logger == NULL) {
 		printf("Error: No pude crear el logger\n");
-		exit(1);
+		abort();
 	}
 
 	return nuevo_logger;
@@ -96,9 +94,9 @@ t_config* iniciar_config(void)
 
 	if(nuevo_config == NULL) {
 		printf("Error: No pude iniciar la config\n");
-		exit(1);
+		abort();
 	}
-
+	
 	return nuevo_config;
 }
 
@@ -133,4 +131,15 @@ void terminar_programa(int conexion, t_log* logger, t_config* config)
 {
 	/* Y por ultimo, hay que liberar lo que utilizamos (conexion, log y config) 
 	  con las funciones de las commons y del TP mencionadas en el enunciado */
+	
+	if (logger != NULL) {
+		log_destroy(logger);
+		};
+	if (config != NULL) {
+		config_destroy(config);
+		};
+	if (conexion != -1) {
+		liberar_conexion(conexion);
+		};
+	exit(0);
 }
