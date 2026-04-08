@@ -41,9 +41,9 @@ int main(void)
 	// Loggeamos el valor de config
 
 	logger = iniciar_logger();
-	log_info(logger, "VALOR: %s \n", valor);
-	log_info(logger, "IP: %s \n", ip);
-	log_info(logger, "PUERTO: %s \n", puerto);
+	log_info(logger, "VALOR: %s", valor);
+	log_info(logger, "IP: %s", ip);
+	log_info(logger, "PUERTO: %s", puerto);
 	log_destroy(logger);
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
